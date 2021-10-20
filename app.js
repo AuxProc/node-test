@@ -2,14 +2,18 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require("./routes/blogRouters");
+const PORT = process.env.PORT || 8080;
+const dbURI = process.env.dbURI;
 
 // express app
 const app = express();
 
 // connect to mongodb
-const dbURI = 'mongodb+srv://mwood:VVHxFNnq97EisQqs@nodetut.lkk7i.mongodb.net/nodetut?retryWrites=true&w=majority'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(8080))
+  .then((result) => {
+    app.listen(PORT);
+    console.log(`Server is listening on port ${PORT}`);
+  })
   .catch((err) => console.log(err));
 
 // register view engine
